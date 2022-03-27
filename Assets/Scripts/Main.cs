@@ -2,11 +2,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 
-// UnityWebRequest.Get example
-
-// Access a website and use UnityWebRequest.Get to download a page.
-// Also try to download a non-existing page. Display the error.
-
 public class Main : MonoBehaviour
 {
 
@@ -18,8 +13,7 @@ public class Main : MonoBehaviour
     void Start()
     {
         
-        StartCoroutine(GetRequest("https://opentdb.com/api.php?amount=5&category=31&difficulty=easy&type=boolean"));
-        
+        StartCoroutine(GetRequest("https://opentdb.com/api.php?amount=10&category=15&type=boolean"));
         
     }
 
@@ -48,80 +42,33 @@ public class Main : MonoBehaviour
             }
             trivial = JsonUtility.FromJson<Trivial>(webRequest.downloadHandler.text);
 
-            
-            
-            /*for(int i = 0; i < 5; i++){
+            int i = 0;
+            while(i < 10){           
+                Debug.Log("Pregunta " + (i + 1) + ": " + trivial.results[i].question);                               
+                
                 respuestaAleatoria = Random.Range(0,2);
+                Respuesta();
+               
+                Debug.Log("Respuesta " + (i + 1) + ": " + Respuesta());
+
+                Debug.Log("Tu respuesta " + (i + 1) + ": " + Respuesta().ToString() + "   Respuesta correcta " + (i + 1) + ": " + trivial.results[i].correct_answer); 
                 
-                Debug.Log("Pregunta: " + trivial.results[i].question);
-                Debug.Log("Respuesta: " + Respuesta());
-                
-                if(Respuesta() != trivial.results[i].correct_answer){
-                    Debug.Log("No has acertado");
-                } else {
+                if(Respuesta().ToString() == trivial.results[i].correct_answer){        
                     Debug.Log("Has acertado");
-                }            
-            }*/
-
-            
-           
-            
-            for(int i = 0; i < 5; i++){
-                respuestaAleatoria = Random.Range(0,2);
-
-                
-                Debug.Log("Pregunta: " + trivial.results[i].question);
-
-                if(respuestaAleatoria == 0){
-                    Debug.Log("Respuesta: True");
                 } else {
-                    Debug.Log("Respuesta: False");
-                }
-                
-                
-                if(respuestaAleatoria.ToString() != trivial.results[i].correct_answer){
                     Debug.Log("No has acertado");
-                } else {
-                    Debug.Log("Has acertado");
-                }            
-            }
-            
-            
+                }   
+                i++;          
+            }   
 
-            
-        }
-    }
-
-    
-     
-    
-
-    
-     /*private string Respuesta(){   
+        }       
         
+    }
+    private bool Respuesta(){         
         if(respuestaAleatoria == 0){
-            return "True";
-        } else {
-            return "False";
-        }
-     }
-     */
-
-   
-    
-    /*private bool TrueFalse(){   
-        if(opcion == 0){
             return true;
-        } else{
+        } else {
             return false;
-        }
-
-    }  */
-
-
-   
-
-    
-    
-
+        }                
+    }
 }
